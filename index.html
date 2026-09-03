@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Journalist Ako</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#171512;
+    --paper:#F5EFDF;
+    --paper-dark:#EDE3C8;
+    --red:#DE3730;
+    --yellow:#FFC93C;
+    --blue:#2C5AA0;
+    --green:#3E7D53;
+    --white:#FFFDF7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* halftone paper texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image: radial-gradient(circle, rgba(23,21,18,0.06) 1px, transparent 1.3px);
+    background-size: 6px 6px;
+    pointer-events:none;
+    z-index:2000;
+    mix-blend-mode:multiply;
+  }
+  h1,h2,h3,.comic-title{
+    font-family:'Bangers', cursive;
+    letter-spacing:0.5px;
+    line-height:1;
+    margin:0;
+  }
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+
+  .halftone-red{
+    background-image: radial-gradient(circle, var(--red) 32%, transparent 33%);
+    background-size: 10px 10px;
+  }
+  .halftone-yellow{
+    background-image: radial-gradient(circle, var(--yellow) 34%, transparent 35%);
+    background-size: 9px 9px;
+  }
+  .halftone-blue{
+    background-image: radial-gradient(circle, var(--blue) 30%, transparent 31%);
+    background-size: 10px 10px;
+  }
+
+  .ink-panel{
+    border:4px solid var(--ink);
+    box-shadow: 7px 7px 0 var(--ink);
+    background:var(--white);
+  }
+
+  /* ===== NAV ===== */
+  header{
+    position:sticky; top:0; z-index:500;
+    background:var(--ink);
+    border-bottom:4px solid var(--ink);
+  }
+  .nav-wrap{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    color:var(--paper);
+  }
+  .brand .badge{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--red);
+    border:3px solid var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bangers', cursive; color:var(--white); font-size:20px;
+    transform:rotate(-8deg);
+  }
+  .brand span.wordmark{
+    font-family:'Bangers', cursive; font-size:22px; letter-spacing:0.5px;
+  }
+  nav.links{
+    display:flex; gap:22px;
+  }
+  nav.links a{
+    text-decoration:none; color:var(--paper);
+    font-weight:700; font-size:14px;
+    padding:6px 2px;
+    border-bottom:3px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  nav.links a:hover{ border-color:var(--yellow); color:var(--yellow); }
+  .nav-toggle{ display:none; background:none; border:2px solid var(--paper); color:var(--paper); font-family:'Bangers'; font-size:14px; padding:6px 10px; border-radius:4px; }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    max-width:1180px; margin:36px auto 10px; padding:0 20px;
+  }
+  .hero-panel{
+    position:relative;
+    background: var(--yellow);
+    border:5px solid var(--ink);
+    box-shadow: 10px 10px 0 var(--ink);
+    padding:56px 40px 64px;
+    overflow:hidden;
+    text-align:center;
+  }
+  .hero-panel .burst{
+    position:absolute; inset:0;
+    background: repeating-conic-gradient(var(--yellow) 0deg 10deg, #FFD966 10deg 20deg);
+    opacity:0.55;
+    z-index:0;
+  }
+  .hero-inner{ position:relative; z-index:1; }
+  .kicker-tag{
+    display:inline-block;
+    background:var(--red); color:var(--white);
+    font-weight:800; font-size:13px;
+    padding:6px 14px; border:3px solid var(--ink);
+    transform:rotate(-3deg);
+    box-shadow:4px 4px 0 var(--ink);
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(48px, 9vw, 108px);
+    color:var(--ink);
+    -webkit-text-stroke: 2px var(--ink);
+    text-shadow: 5px 5px 0 var(--white), 9px 9px 0 var(--red);
+  }
+  .hero h1 .ako{ color:var(--red); -webkit-text-stroke: 2px var(--ink); }
+  .speech-bubble{
+    position:relative;
+    display:inline-block;
+    background:var(--white);
+    border:4px solid var(--ink);
+    border-radius:26px;
+    padding:16px 26px;
+    margin-top:30px;
+    font-weight:700;
+    font-size:17px;
+    max-width:520px;
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .speech-bubble::after{
+    content:"";
+    position:absolute; left:46px; bottom:-22px;
+    border-width:22px 16px 0 0;
+    border-style:solid;
+    border-color:var(--white) transparent transparent transparent;
+    filter:drop-shadow(2px 2px 0 var(--ink));
+  }
+  .hero-ctas{ margin-top:44px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .btn-comic{
+    font-family:'Bangers', cursive;
+    font-size:19px; letter-spacing:0.5px;
+    padding:14px 30px;
+    background:var(--red); color:var(--white);
+    border:4px solid var(--ink);
+    box-shadow:6px 6px 0 var(--ink);
+    cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease;
+    text-decoration:none; display:inline-block;
+  }
+  .btn-comic.alt{ background:var(--blue); }
+  .btn-comic.ghost{ background:var(--white); color:var(--ink); }
+  .btn-comic:hover{ transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--ink); }
+  .btn-comic:active{ transform:translate(1px,1px); box-shadow:3px 3px 0 var(--ink); }
+
+  /* motion lines decoration */
+  .motion-lines{
+    position:absolute; top:20px; right:-10px; width:140px; height:140px;
+    background: repeating-linear-gradient(100deg, var(--ink) 0 3px, transparent 3px 14px);
+    opacity:0.12; z-index:0;
+    display:none;
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section{
+    max-width:1180px; margin:0 auto; padding:70px 20px 10px;
+  }
+  .section-cap{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-bottom:26px;
+  }
+  .panel-number{
+    font-family:'Bangers'; font-size:26px;
+    background:var(--ink); color:var(--paper);
+    width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    transform:rotate(-6deg);
+    border:3px solid var(--ink);
+  }
+  .section h2{
+    font-size:clamp(30px, 4.5vw, 46px);
+  }
+  .section .sub{
+    font-weight:700; font-size:15px; color:var(--ink); opacity:0.75;
+    max-width:600px; margin-top:6px;
+  }
+
+  /* ===== ABOUT (2-panel comic strip) ===== */
+  .strip-2{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:22px; margin-top:8px;
+  }
+  .panel{
+    padding:26px; position:relative;
+  }
+  .panel.tilt-l{ transform:rotate(-1.2deg); }
+  .panel.tilt-r{ transform:rotate(1.4deg); }
+  .caption-box{
+    background:var(--ink); color:var(--paper);
+    font-weight:800; font-size:12.5px;
+    padding:4px 10px; display:inline-block;
+    margin-bottom:14px;
+  }
+  .panel p{ font-size:15.5px; }
+  .stat-row{ display:flex; gap:14px; margin-top:18px; flex-wrap:wrap; }
+  .stat-chip{
+    background:var(--paper-dark); border:3px solid var(--ink);
+    padding:10px 14px; text-align:center; min-width:92px;
+  }
+  .stat-chip b{ font-family:'Bangers'; font-size:26px; display:block; color:var(--red); }
+  .stat-chip span{ font-size:11px; font-weight:700; }
+
+  /* ===== RESOURCE HUB (accordion panels) ===== */
+  .accordion{ margin-top:8px; display:flex; flex-direction:column; gap:14px; }
+  .acc-item{
+    background:var(--white); border:4px solid var(--ink);
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .acc-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 20px; cursor:pointer; user-select:none;
+    font-family:'Bangers'; font-size:19px; letter-spacing:0.3px;
+  }
+  .acc-head .tag{
+    font-family:'Inter'; font-weight:800; font-size:11px;
+    background:var(--yellow); border:2px solid var(--ink);
+    padding:3px 8px; margin-left:10px;
+  }
+  .acc-head .plus{
+    font-family:'Bangers'; font-size:24px; transition:transform .2s ease;
+  }
+  .acc-item.open .plus{ transform:rotate(45deg); }
+  .acc-body{
+    max-height:0; overflow:hidden; transition:max-height .25s ease;
+    padding:0 20px;
+  }
+  .acc-item.open .acc-body{ max-height:200px; padding:0 20px 18px; }
+  .acc-body p{ margin:0; font-size:14.5px; }
+
+  /* ===== COMMUNITY MAP ===== */
+  .map-panel{
+    padding:30px; margin-top:8px; position:relative; overflow:hidden;
+  }
+  .region-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+    gap:14px; margin-top:20px;
+  }
+  .region-card{
+    border:3px solid var(--ink); background:var(--paper-dark);
+    padding:14px; text-align:center; position:relative;
+    transition:transform .15s ease;
+  }
+  .region-card:hover{ transform:translateY(-4px); background:var(--yellow); }
+  .region-card b{ font-family:'Bangers'; font-size:18px; display:block; }
+  .region-card span{ font-size:12px; font-weight:700; }
+  .pin{
+    width:16px; height:16px; border-radius:50% 50% 50% 0;
+    background:var(--red); border:2px solid var(--ink);
+    margin:0 auto 8px; transform:rotate(-45deg);
+  }
+
+  /* ===== EVENTS timeline strip ===== */
+  .events-strip{
+    display:flex; gap:18px; margin-top:8px;
+    overflow-x:auto; padding-bottom:14px;
+  }
+  .event-card{
+    min-width:230px; padding:20px; flex-shrink:0;
+    background:var(--white); position:relative;
+  }
+  .event-card .date-badge{
+    position:absolute; top:-14px; left:16px;
+    background:var(--red); color:var(--white);
+    font-family:'Bangers'; font-size:14px;
+    padding:6px 10px; border:3px solid var(--ink);
+    transform:rotate(-4deg);
+  }
+  .event-card h3{ font-size:20px; margin-top:10px; }
+  .event-card p{ font-size:13.5px; margin-top:8px; }
+
+  /* ===== SHOWCASE gallery ===== */
+  .showcase-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-top:8px;
+  }
+  .show-card{
+    position:relative; padding:0; overflow:hidden; aspect-ratio:4/5;
+  }
+  .show-card .ph{
+    width:100%; height:70%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bangers'; font-size:15px; color:var(--white);
+    text-align:center; padding:10px;
+  }
+  .show-card .cap{
+    padding:12px 14px; background:var(--white);
+    border-top:4px solid var(--ink);
+  }
+  .show-card .cap b{ font-size:13.5px; display:block; }
+  .show-card .cap span{ font-size:11.5px; opacity:0.7; }
+  .sfx{
+    position:absolute; top:10px; right:10px;
+    font-family:'Bangers'; font-size:13px;
+    background:var(--yellow); border:2px solid var(--ink);
+    padding:3px 8px; transform:rotate(6deg);
+    box-shadow:3px 3px 0 var(--ink);
+  }
+
+  /* ===== GET INVOLVED / CTA ===== */
+  .cta-panel{
+    margin:80px auto 0; max-width:1180px; padding:0 20px 80px;
+  }
+  .cta-inner{
+    background:var(--red); border:5px solid var(--ink);
+    box-shadow:10px 10px 0 var(--ink);
+    padding:60px 40px; text-align:center; position:relative; overflow:hidden;
+  }
+  .cta-inner::before{
+    content:""; position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.25) 32%, transparent 33%);
+    background-size:12px 12px;
+  }
+  .cta-inner *{ position:relative; z-index:1; }
+  .cta-inner h2{ color:var(--white); font-size:clamp(30px,5vw,52px); -webkit-text-stroke:1.5px var(--ink); }
+  .cta-inner p{ color:var(--white); font-weight:700; max-width:520px; margin:14px auto 30px; font-size:15.5px; }
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:var(--ink); color:var(--paper);
+    padding:36px 20px; text-align:center;
+  }
+  footer .fbrand{ font-family:'Bangers'; font-size:22px; margin-bottom:8px; }
+  footer p{ font-size:12.5px; opacity:0.7; margin:0; }
+
+  @media (max-width: 860px){
+    .strip-2{ grid-template-columns:1fr; }
+    .showcase-grid{ grid-template-columns:1fr 1fr; }
+    nav.links{ display:none; }
+    .nav-toggle{ display:inline-block; }
+  }
+  @media (max-width: 540px){
+    .showcase-grid{ grid-template-columns:1fr; }
+    .hero-panel{ padding:40px 20px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand">
+      <div class="badge">CJ</div>
+      <span class="wordmark">Campus Journalist Ako</span>
+    </div>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#resources">Resources</a>
+      <a href="#community">Community</a>
+      <a href="#events">Events</a>
+      <a href="#showcase">Showcase</a>
+      <a href="#join">Join</a>
+    </nav>
+    <button class="nav-toggle">MENU</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-panel">
+    <div class="hero-inner">
+      <span class="kicker-tag">★ ISSUE NO. 1 — PANG-KAMPUS EDITION</span>
+      <h1>CAMPUS<br>JOURNALIST <span class="ako">AKO!</span></h1>
+      <div class="speech-bubble">
+        "Every school has a story. We're the ones who chase it, write it, and get it right."
+      </div>
+      <div class="hero-ctas">
+        <a class="btn-comic" href="#join">JOIN THE DESK →</a>
+        <a class="btn-comic alt" href="#resources">GRAB THE RESOURCES</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-cap">
+    <div class="panel-number">1</div>
+    <div>
+      <h2>The Ako Movement</h2>
+      <p class="sub">Isang kilusan ng mga batang mamamahayag — from campus pubs to press cons nationwide.</p>
+    </div>
+  </div>
+
+  <div class="strip-2">
+    <div class="panel ink-panel tilt-l">
+      <span class="caption-box">PANEL 1 — ORIGIN</span>
+      <p>Campus Journalist Ako started as a rallying cry for student writers, photographers, and layout artists who wanted more than a school paper deadline — they wanted a real newsroom culture, built for and by campus press.</p>
+      <p>Today it's a nationwide network of desks: News, Features, Sports, Sci-Tech, and Opinion, mentoring the next wave of Filipino journalists from Luzon to Mindanao.</p>
+      <div class="stat-row">
+        <div class="stat-chip"><b>120+</b><span>MEMBER SCHOOLS</span></div>
+        <div class="stat-chip"><b>5</b><span>ACTIVE DESKS</span></div>
+        <div class="stat-chip"><b>40+</b><span>TRAININGS HELD</span></div>
+      </div>
+    </div>
+    <div class="panel ink-panel tilt-r halftone-yellow" style="background-blend-mode:overlay;">
+      <span class="caption-box" style="background:var(--red);">PANEL 2 — THE MISSION</span>
+      <p style="font-weight:700;">"Journalism for all — kahit saang paaralan ka nanggaling."</p>
+      <p>We equip campus writers with real training, real mentors, and a real platform to publish — so no story from no school gets left untold.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCE HUB -->
+<section class="section" id="resources">
+  <div class="section-cap">
+    <div class="panel-number">2</div>
+    <div>
+      <h2>Resource Hub</h2>
+      <p class="sub">Tap a panel to open. Modules in Filipino and English, sorted by desk.</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-item open">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        NEWS WRITING 101 <span class="tag">BEGINNER</span>
+        <span class="plus" style="margin-left:auto;">+</span>
+      </div>
+      <div class="acc-body">
+        <p>Inverted pyramid structure, 5W1H leads, and how to write a clean numeral-based news copy ready for print or web.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        FEATURE & OPINION WRITING <span class="tag">INTERMEDIATE</span>
+        <span class="plus" style="margin-left:auto;">+</span>
+      </div>
+      <div class="acc-body">
+        <p>Narrative hooks, voice, and how to balance opinion writing with campus press ethics.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        PHOTOJOURNALISM & LAYOUT <span class="tag">ALL LEVELS</span>
+        <span class="plus" style="margin-left:auto;">+</span>
+      </div>
+      <div class="acc-body">
+        <p>Shot composition for press events, caption-writing, and desktop publishing basics for school pubs.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        MEDIA & AP STYLE GUIDE <span class="tag">REFERENCE</span>
+        <span class="plus" style="margin-left:auto;">+</span>
+      </div>
+      <div class="acc-body">
+        <p>Quick-reference sheet for consistent style across desks — from headline case to numeral formatting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="section" id="community">
+  <div class="section-cap">
+    <div class="panel-number">3</div>
+    <div>
+      <h2>Where We Write From</h2>
+      <p class="sub">Member chapters across the archipelago — click a region to see who's in it.</p>
+    </div>
+  </div>
+
+  <div class="map-panel ink-panel">
+    <p style="font-weight:700; font-size:14px;">📍 Chapters are grouped by island group. A live version would plot each school as a pin on an interactive PH map.</p>
+    <div class="region-grid">
+      <div class="region-card"><div class="pin"></div><b>Luzon</b><span>58 schools</span></div>
+      <div class="region-card"><div class="pin"></div><b>Visayas</b><span>31 schools</span></div>
+      <div class="region-card"><div class="pin"></div><b>Mindanao</b><span>24 schools</span></div>
+      <div class="region-card"><div class="pin"></div><b>NCR</b><span>19 schools</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="section" id="events">
+  <div class="section-cap">
+    <div class="panel-number">4</div>
+    <div>
+      <h2>Trainings & Press Cons</h2>
+      <p class="sub">Scroll sideways — new panels added every month.</p>
+    </div>
+  </div>
+
+  <div class="events-strip">
+    <div class="event-card ink-panel">
+      <span class="date-badge">SEPT 20</span>
+      <h3>Campus Press Con: NCR Leg</h3>
+      <p>One-day intensive for news and feature writing, open to all member schools in Metro Manila.</p>
+    </div>
+    <div class="event-card ink-panel">
+      <span class="date-badge">OCT 04</span>
+      <h3>Layout & Design Bootcamp</h3>
+      <p>Hands-on session on desktop publishing and visual identity for school papers.</p>
+    </div>
+    <div class="event-card ink-panel">
+      <span class="date-badge">OCT 18</span>
+      <h3>Ethics in Student Media</h3>
+      <p>A roundtable on sourcing, bias, and accountability for campus reporters.</p>
+    </div>
+    <div class="event-card ink-panel">
+      <span class="date-badge">NOV 08</span>
+      <h3>Regional Fellowship Demo Day</h3>
+      <p>Fellows present their final campus investigative pieces to a panel of mentors.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section class="section" id="showcase">
+  <div class="section-cap">
+    <div class="panel-number">5</div>
+    <div>
+      <h2>Kwento ng Linggo</h2>
+      <p class="sub">Featured member work — this week's standout stories.</p>
+    </div>
+  </div>
+
+  <div class="showcase-grid">
+    <div class="show-card ink-panel">
+      <span class="sfx">SCOOP!</span>
+      <div class="ph halftone-red" style="background-color:var(--red);">FRONT PAGE<br>PHOTO</div>
+      <div class="cap"><b>"Bagyo, Balita: Isang Ulat"</b><span>Feature · Central Luzon Chapter</span></div>
+    </div>
+    <div class="show-card ink-panel">
+      <span class="sfx">PRESS!</span>
+      <div class="ph halftone-blue" style="background-color:var(--blue);">EDITORIAL<br>CARTOON</div>
+      <div class="cap"><b>"Tuition Talk"</b><span>Opinion · Visayas Chapter</span></div>
+    </div>
+    <div class="show-card ink-panel">
+      <span class="sfx">EXTRA!</span>
+      <div class="ph halftone-yellow" style="background-color:var(--yellow); color:var(--ink);">SPORTS<br>SPREAD</div>
+      <div class="cap"><b>"Overtime Heroics"</b><span>Sports · Mindanao Chapter</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN CTA -->
+<section class="cta-panel" id="join">
+  <div class="cta-inner">
+    <h2>SUMALI. SUMULAT. SUMABOG.</h2>
+    <p>Whether you're a first-year staffer or a veteran editor-in-chief — there's a desk for you. Membership is free for all recognized campus publications.</p>
+    <a class="btn-comic ghost" href="#">SIGN UP YOUR PUB →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="fbrand">CAMPUS JOURNALIST AKO</div>
+  <p>Journalism for all. A campus press movement, panel by panel.</p>
+</footer>
+
+<script>
+  function toggleAcc(headEl){
+    const item = headEl.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+    if(!wasOpen){ item.classList.add('open'); }
+  }
+</script>
+
+</body>
+</html>
