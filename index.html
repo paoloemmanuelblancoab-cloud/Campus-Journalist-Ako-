@@ -330,6 +330,111 @@
     box-shadow:3px 3px 0 var(--ink);
   }
 
+  /* ===== COMMUNITY FEED ===== */
+  .feed-layout{
+    display:grid; grid-template-columns:1fr 1.6fr; gap:22px; margin-top:8px;
+    align-items:start;
+  }
+  @media (max-width: 860px){ .feed-layout{ grid-template-columns:1fr; } }
+
+  .composer{ padding:22px; position:relative; }
+  .composer h3{ font-size:19px; margin-bottom:14px; }
+  .composer label{ display:block; font-weight:800; font-size:11.5px; margin:12px 0 5px; letter-spacing:0.3px; }
+  .composer input, .composer select, .composer textarea{
+    width:100%; border:3px solid var(--ink); background:var(--paper);
+    font-family:'Inter'; font-size:13.5px; padding:9px 10px;
+  }
+  .composer textarea{ resize:vertical; min-height:70px; }
+  .composer .btn-comic{ margin-top:16px; font-size:15px; padding:11px 22px; width:100%; }
+
+  .feed-col{ display:flex; flex-direction:column; gap:18px; }
+  .post-card{ padding:20px; }
+  .post-head{ display:flex; align-items:center; gap:12px; }
+  .avatar{
+    width:44px; height:44px; border-radius:50%; flex-shrink:0;
+    background:var(--blue); border:3px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bangers'; color:var(--white); font-size:17px;
+  }
+  .post-who b{ display:block; font-size:14.5px; }
+  .post-who span{ display:block; font-size:11.5px; opacity:0.7; font-weight:700; }
+  .post-type-tag{
+    margin-left:auto; align-self:flex-start;
+    font-family:'Bangers'; font-size:11.5px; letter-spacing:0.3px;
+    background:var(--yellow); border:2px solid var(--ink);
+    padding:4px 9px; transform:rotate(-2deg); white-space:nowrap;
+  }
+  .post-body{ font-size:14.5px; margin-top:12px; }
+  .post-foot{
+    display:flex; gap:18px; margin-top:14px; padding-top:12px;
+    border-top:3px solid var(--ink);
+  }
+  .post-action{
+    background:none; border:none; font-family:'Inter'; font-weight:800;
+    font-size:12.5px; cursor:pointer; color:var(--ink); padding:4px 0;
+  }
+  .post-action.liked{ color:var(--red); }
+  .post-action:hover{ text-decoration:underline; }
+  .empty-feed{ font-size:13.5px; font-weight:700; opacity:0.7; padding:20px; text-align:center; }
+
+  /* ===== PROFILE / SCHOOL MODALS ===== */
+  .post-who b.linkable, .school-link{
+    cursor:pointer; text-decoration:underline; text-decoration-style:dotted;
+  }
+  .post-who b.linkable:hover, .school-link:hover{ color:var(--red); }
+
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(23,21,18,0.78);
+    display:none; align-items:flex-start; justify-content:center;
+    z-index:3000; padding:40px 20px; overflow-y:auto;
+  }
+  .modal-overlay.active{ display:flex; }
+  .modal-box{
+    background:var(--white); border:5px solid var(--ink);
+    box-shadow:10px 10px 0 var(--ink);
+    max-width:600px; width:100%; padding:32px; position:relative;
+  }
+  .modal-close{
+    position:absolute; top:14px; right:14px;
+    background:var(--red); color:var(--white);
+    border:3px solid var(--ink); width:34px; height:34px;
+    font-family:'Bangers'; font-size:16px; cursor:pointer;
+  }
+  .modal-head{ display:flex; align-items:center; gap:16px; margin-bottom:10px; }
+  .modal-avatar{
+    width:64px; height:64px; border-radius:50%; flex-shrink:0;
+    background:var(--blue); border:4px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bangers'; color:var(--white); font-size:24px;
+  }
+  .modal-head h2{ font-size:26px; }
+  .modal-head .sub{ font-size:12.5px; font-weight:700; opacity:0.7; margin-top:2px; }
+  .modal-box .stat-row{ margin-top:20px; }
+  .modal-section{ margin-top:22px; }
+  .modal-section h4{
+    font-family:'Bangers'; font-size:16px; letter-spacing:0.3px; margin-bottom:10px;
+  }
+  .desk-chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .desk-chip{
+    font-family:'Bangers'; font-size:12px;
+    background:var(--yellow); border:2px solid var(--ink);
+    padding:4px 10px; transform:rotate(-1.5deg);
+  }
+  .clip-item, .roster-item, .win-item{
+    border:3px solid var(--ink); background:var(--paper-dark);
+    padding:12px 14px; margin-bottom:10px;
+  }
+  .clip-item .clip-tag, .win-item .clip-tag{
+    font-family:'Bangers'; font-size:10.5px;
+    background:var(--white); border:2px solid var(--ink);
+    padding:2px 7px; margin-bottom:6px; display:inline-block;
+  }
+  .clip-item p, .win-item p{ font-size:13px; margin:0; }
+  .roster-item{ display:flex; justify-content:space-between; align-items:center; }
+  .roster-item b{ font-size:13.5px; }
+  .roster-item span{ font-size:11px; font-weight:700; opacity:0.7; }
+  .empty-note{ font-size:12.5px; font-weight:700; opacity:0.6; }
+
   /* ===== GET INVOLVED / CTA ===== */
   .cta-panel{
     margin:80px auto 0; max-width:1180px; padding:0 20px 80px;
@@ -382,6 +487,7 @@
       <a href="#community">Community</a>
       <a href="#events">Events</a>
       <a href="#showcase">Showcase</a>
+      <a href="#feed">Feed</a>
       <a href="#join">Join</a>
     </nav>
     <button class="nav-toggle">MENU</button>
@@ -568,6 +674,47 @@
   </div>
 </section>
 
+<!-- COMMUNITY FEED -->
+<section class="section" id="feed">
+  <div class="section-cap">
+    <div class="panel-number">6</div>
+    <div>
+      <h2>The Wire</h2>
+      <p class="sub">Post your wins, press con results, and published pieces — straight from the desk.</p>
+    </div>
+  </div>
+
+  <div class="feed-layout">
+    <div class="composer ink-panel">
+      <h3>NEW DISPATCH</h3>
+      <label for="pName">Your name</label>
+      <input type="text" id="pName" placeholder="Juana dela Cruz">
+      <label for="pSchool">School</label>
+      <input type="text" id="pSchool" placeholder="e.g. University of Santo Tomas">
+      <label for="pDesk">Desk</label>
+      <select id="pDesk">
+        <option value="News">News</option>
+        <option value="Features">Features</option>
+        <option value="Sports">Sports</option>
+        <option value="Sci-Tech">Sci-Tech</option>
+        <option value="Opinion">Opinion</option>
+      </select>
+      <label for="pType">Post type</label>
+      <select id="pType">
+        <option value="Achievement">Achievement</option>
+        <option value="Press Con Result">Press Con Result</option>
+        <option value="Article Link">Article Link</option>
+        <option value="Photo / Layout">Photo / Layout</option>
+      </select>
+      <label for="pBody">What happened?</label>
+      <textarea id="pBody" placeholder="Nag-champion sa NCR press con, News Writing category..."></textarea>
+      <button class="btn-comic" onclick="addPost()">POST TO THE WIRE →</button>
+    </div>
+
+    <div class="feed-col" id="feedContainer"></div>
+  </div>
+</section>
+
 <!-- JOIN CTA -->
 <section class="cta-panel" id="join">
   <div class="cta-inner">
@@ -582,6 +729,16 @@
   <p>Journalism for all. A campus press movement, panel by panel.</p>
 </footer>
 
+<!-- PROFILE MODAL -->
+<div class="modal-overlay" id="profileModal">
+  <div class="modal-box ink-panel" id="profileModalContent"></div>
+</div>
+
+<!-- SCHOOL MODAL -->
+<div class="modal-overlay" id="schoolModal">
+  <div class="modal-box ink-panel" id="schoolModalContent"></div>
+</div>
+
 <script>
   function toggleAcc(headEl){
     const item = headEl.parentElement;
@@ -589,6 +746,216 @@
     document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
     if(!wasOpen){ item.classList.add('open'); }
   }
+
+  /* ===== COMMUNITY FEED ===== */
+  let posts = [
+    {
+      name: "Mika Ramirez",
+      school: "Ateneo de Naga University",
+      desk: "Sports",
+      type: "Press Con Result",
+      body: "1st place, Sports Writing — Bicol Regional Schools Press Conference! Sinama namin yung buong training natin sa desk dito. Salamat sa mentors!",
+      likes: 24,
+      comments: 6,
+      liked: false
+    },
+    {
+      name: "Josh Villareal",
+      school: "University of St. La Salle",
+      desk: "Sci-Tech",
+      type: "Article Link",
+      body: "New piece up: how three campus pubs in Visayas are covering the campus Wi-Fi upgrade rollout and what students actually think about it.",
+      likes: 11,
+      comments: 2,
+      liked: false
+    },
+    {
+      name: "Faye Bautista",
+      school: "MSU-Iligan Institute of Technology",
+      desk: "Features",
+      type: "Achievement",
+      body: "Officially EIC for AY 2026-2027! Grateful to the whole Mindanao chapter for the support during fellowship season.",
+      likes: 38,
+      comments: 9,
+      liked: false
+    },
+    {
+      name: "Mika Ramirez",
+      school: "Ateneo de Naga University",
+      desk: "Sports",
+      type: "Article Link",
+      body: "Covered the intramurals opening ceremony — full photo essay up on our pub's site now.",
+      likes: 9,
+      comments: 1,
+      liked: false
+    }
+  ];
+
+  // Region + short bio lookup for known schools (falls back to generic values for new/unlisted schools)
+  const schoolInfo = {
+    "Ateneo de Naga University": { region: "Luzon" },
+    "University of St. La Salle": { region: "Visayas" },
+    "MSU-Iligan Institute of Technology": { region: "Mindanao" }
+  };
+
+  function initials(name){
+    return name.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase();
+  }
+
+  function renderFeed(){
+    const container = document.getElementById('feedContainer');
+    if(!posts.length){
+      container.innerHTML = '<div class="empty-feed ink-panel">No dispatches yet. Be the first to post!</div>';
+      return;
+    }
+    container.innerHTML = posts.map((p, i) => `
+      <div class="post-card ink-panel">
+        <div class="post-head">
+          <div class="avatar">${initials(p.name)}</div>
+          <div class="post-who">
+            <b class="linkable" onclick="openProfile('${p.name.replace(/'/g,"\\'")}')">${p.name}</b>
+            <span class="school-link" onclick="openSchool('${p.school.replace(/'/g,"\\'")}')">${p.school} — ${p.desk} Desk</span>
+          </div>
+          <span class="post-type-tag">${p.type.toUpperCase()}</span>
+        </div>
+        <p class="post-body">${p.body}</p>
+        <div class="post-foot">
+          <button class="post-action ${p.liked ? 'liked' : ''}" onclick="toggleLike(${i})">
+            ${p.liked ? '♥' : '♡'} ${p.likes} Likes
+          </button>
+          <button class="post-action">💬 ${p.comments} Comments</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function toggleLike(i){
+    posts[i].liked = !posts[i].liked;
+    posts[i].likes += posts[i].liked ? 1 : -1;
+    renderFeed();
+  }
+
+  function addPost(){
+    const name = document.getElementById('pName').value.trim();
+    const school = document.getElementById('pSchool').value.trim();
+    const desk = document.getElementById('pDesk').value;
+    const type = document.getElementById('pType').value;
+    const body = document.getElementById('pBody').value.trim();
+
+    if(!name || !school || !body){
+      alert('Fill in your name, school, and what happened bago mag-post.');
+      return;
+    }
+
+    posts.unshift({ name, school, desk, type, body, likes: 0, comments: 0, liked: false });
+
+    document.getElementById('pName').value = '';
+    document.getElementById('pSchool').value = '';
+    document.getElementById('pBody').value = '';
+
+    renderFeed();
+  }
+
+  /* ===== PROFILE PAGE (MODAL) ===== */
+  function openProfile(name){
+    const mine = posts.filter(p => p.name === name);
+    if(!mine.length) return;
+    const school = mine[0].school;
+    const desk = mine[0].desk;
+    const totalLikes = mine.reduce((sum, p) => sum + p.likes, 0);
+    const wins = mine.filter(p => p.type === 'Achievement' || p.type === 'Press Con Result').length;
+
+    const clipsHtml = mine.map(p => `
+      <div class="clip-item">
+        <span class="clip-tag">${p.type.toUpperCase()}</span>
+        <p>${p.body}</p>
+      </div>
+    `).join('');
+
+    document.getElementById('profileModalContent').innerHTML = `
+      <button class="modal-close" onclick="closeModal('profileModal')">✕</button>
+      <div class="modal-head">
+        <div class="modal-avatar">${initials(name)}</div>
+        <div>
+          <h2>${name}</h2>
+          <div class="sub school-link" onclick="closeModal('profileModal'); openSchool('${school.replace(/'/g,"\\'")}')">${school} — ${desk} Desk</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-chip"><b>${mine.length}</b><span>Posts</span></div>
+        <div class="stat-chip"><b>${totalLikes}</b><span>Likes</span></div>
+        <div class="stat-chip"><b>${wins}</b><span>Wins</span></div>
+      </div>
+      <div class="modal-section">
+        <h4>CLIPS &amp; DISPATCHES</h4>
+        ${clipsHtml}
+      </div>
+    `;
+    document.getElementById('profileModal').classList.add('active');
+  }
+
+  /* ===== SCHOOL PAGE (MODAL) ===== */
+  function openSchool(school){
+    const schoolPosts = posts.filter(p => p.school === school);
+    if(!schoolPosts.length) return;
+    const region = (schoolInfo[school] && schoolInfo[school].region) || "Unspecified Chapter";
+
+    const rosterMap = {};
+    schoolPosts.forEach(p => { rosterMap[p.name] = p.desk; });
+    const roster = Object.keys(rosterMap);
+
+    const desks = [...new Set(schoolPosts.map(p => p.desk))];
+    const wins = schoolPosts.filter(p => p.type === 'Achievement' || p.type === 'Press Con Result');
+
+    const rosterHtml = roster.map(n => `
+      <div class="roster-item">
+        <b class="linkable" onclick="closeModal('schoolModal'); openProfile('${n.replace(/'/g,"\\'")}')">${n}</b>
+        <span>${rosterMap[n]} Desk</span>
+      </div>
+    `).join('');
+
+    const winsHtml = wins.length ? wins.map(p => `
+      <div class="win-item">
+        <span class="clip-tag">${p.type.toUpperCase()}</span>
+        <p><b>${p.name}</b> — ${p.body}</p>
+      </div>
+    `).join('') : '<p class="empty-note">No verified wins posted yet.</p>';
+
+    document.getElementById('schoolModalContent').innerHTML = `
+      <button class="modal-close" onclick="closeModal('schoolModal')">✕</button>
+      <div class="modal-head">
+        <div class="modal-avatar">${initials(school)}</div>
+        <div>
+          <h2>${school}</h2>
+          <div class="sub">${region}</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-chip"><b>${roster.length}</b><span>Roster</span></div>
+        <div class="stat-chip"><b>${desks.length}</b><span>Desks</span></div>
+        <div class="stat-chip"><b>${wins.length}</b><span>Wins</span></div>
+      </div>
+      <div class="modal-section">
+        <h4>DESKS</h4>
+        <div class="desk-chip-row">${desks.map(d => `<span class="desk-chip">${d}</span>`).join('')}</div>
+      </div>
+      <div class="modal-section">
+        <h4>ROSTER</h4>
+        ${rosterHtml}
+      </div>
+      <div class="modal-section">
+        <h4>RECENT WINS</h4>
+        ${winsHtml}
+      </div>
+    `;
+    document.getElementById('schoolModal').classList.add('active');
+  }
+
+  function closeModal(id){
+    document.getElementById(id).classList.remove('active');
+  }
+
+  renderFeed();
 </script>
 
 </body>
